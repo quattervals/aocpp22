@@ -2,10 +2,10 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "ESE",
+            "name": "APOCPP",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/ese",
+            "program": "${workspaceFolder}/build/aocpp",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}/build",
@@ -26,7 +26,7 @@
             "name": "Test ESE App",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/test/app/ese_app_test",
+            "program": "${workspaceFolder}/build/test/app/aocpp_app_test",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
