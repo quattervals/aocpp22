@@ -52,7 +52,27 @@
 			"bit": "cpp",
 			"stdint.h": "c",
 			"stdbool.h": "c",
-			"app_measurement.h": "c"
+			"app_measurement.h": "c",
+			"any": "cpp",
+			"chrono": "cpp",
+			"compare": "cpp",
+			"concepts": "cpp",
+			"condition_variable": "cpp",
+			"cstring": "cpp",
+			"ctime": "cpp",
+			"forward_list": "cpp",
+			"list": "cpp",
+			"map": "cpp",
+			"set": "cpp",
+			"unordered_set": "cpp",
+			"ratio": "cpp",
+			"mutex": "cpp",
+			"numbers": "cpp",
+			"ranges": "cpp",
+			"semaphore": "cpp",
+			"stop_token": "cpp",
+			"thread": "cpp",
+			"variant": "cpp"
 		},
 		"C_Cpp.formatting": "clangFormat"
 	}

@@ -9,7 +9,7 @@ int main() {
 
   day_1_executor();
 
-  day_4_executor("inputs/day_4_example.txt");
+  day_4_executor("inputs/day_4_hot.txt");
 
   return 0;
 }

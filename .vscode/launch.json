@@ -23,7 +23,7 @@
             "miDebuggerPath": "/usr/bin/gdb"
         },
         {
-            "name": "Test ESE App",
+            "name": "Test AOCPP",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/build/test/app/aocpp_app_test",
