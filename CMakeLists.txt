@@ -6,12 +6,10 @@ project(
   VERSION 0.1
   DESCRIPTION "Advent of Code 22 with C++")
 
-
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-
 
 # Set a default build type if none was specified
 set(default_build_type "Debug")
@@ -31,10 +29,9 @@ Include(FetchContent)
 FetchContent_Declare(
   Catch2
   GIT_REPOSITORY https://github.com/catchorg/Catch2.git
-  GIT_TAG        v3.2.1 # or a later release
+  GIT_TAG v3.2.1 # or a later release
 )
 FetchContent_MakeAvailable(Catch2)
-
 
 add_library(common INTERFACE)
 
@@ -44,7 +41,6 @@ add_executable(${PROJECT_NAME} target.cpp)
 
 target_include_directories(common INTERFACE
   ${PROJECT_SOURCE_DIR}/app/
-
 )
 target_link_libraries(${PROJECT_NAME} PUBLIC libApp common)
 

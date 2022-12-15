@@ -7,18 +7,7 @@
 #include <vector>
 
 #include "day_4.hpp"
-
-std::vector<std::string> split_to_vec(const std::string& in, const char delim) {
-  std::string s;
-  std::vector<std::string> out;
-  if (! in.empty()) {
-    std::stringstream ss(in);
-    while (std::getline(ss, s, delim)) {
-      out.push_back(s);
-    }
-  }
-  return out;
-}
+#include "utils.hpp"
 
 void day_4_executor(const std::string& filename) {
   std::cout << "this is day four" << std::endl;

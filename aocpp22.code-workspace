@@ -72,7 +72,10 @@
 			"semaphore": "cpp",
 			"stop_token": "cpp",
 			"thread": "cpp",
-			"variant": "cpp"
+			"variant": "cpp",
+			"iomanip": "cpp",
+			"cinttypes": "cpp",
+			"stack": "cpp"
 		},
 		"C_Cpp.formatting": "clangFormat"
 	}
