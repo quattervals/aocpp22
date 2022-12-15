@@ -2,13 +2,13 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "ESE",
+            "name": "APOCPP",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/ese",
+            "program": "${workspaceFolder}/build/aocpp",
             "args": [],
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}/build",
+            "cwd": "${workspaceFolder}",
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
@@ -23,10 +23,10 @@
             "miDebuggerPath": "/usr/bin/gdb"
         },
         {
-            "name": "Test ESE App",
+            "name": "Test AOCPP",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/test/app/ese_app_test",
+            "program": "${workspaceFolder}/build/test/app/aocpp_app_test",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
