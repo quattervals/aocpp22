@@ -32,4 +32,5 @@ struct section_ids_of_pair {
 void day_4_executor(const std::string& filename);
 section_ids_of_pair from_input(const std::string& line);
 
-bool one_contains_the_other(section_ids_of_pair& pair);
+bool one_contains_the_other(const section_ids_of_pair& pair);
+bool partial_overlap(const section_ids_of_pair& pair);

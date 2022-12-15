@@ -24,6 +24,7 @@ void day_4_executor(const std::string& filename) {
   std::cout << "this is day four" << std::endl;
 
   int count_fully_containing{ 0 };
+  int count_partial_containing{ 0 };
   std::ifstream file(filename);
 
   if (file.is_open()) {
@@ -32,6 +33,9 @@ void day_4_executor(const std::string& filename) {
       if (one_contains_the_other(pair)) {
         count_fully_containing += 1;
       }
+      if (partial_overlap(pair)) {
+        count_partial_containing += 1;
+      }
     }
   }
   else {
@@ -39,6 +43,7 @@ void day_4_executor(const std::string& filename) {
   }
 
   std::cout << "Number of fully contained items is " << count_fully_containing << std::endl;
+  std::cout << "Number of partially contained items is " << count_partial_containing << std::endl;
 }
 
 section_ids_of_pair from_input(const std::string& line) {
@@ -58,11 +63,26 @@ section_ids_of_pair from_input(const std::string& line) {
   return pairs;
 }
 
-bool one_contains_the_other(section_ids_of_pair& pair) {
+bool one_contains_the_other(const section_ids_of_pair& pair) {
   if (pair.first.lower <= pair.second.lower && pair.first.upper >= pair.second.upper) {
     return true;
   }
   else if (pair.second.lower <= pair.first.lower && pair.second.upper >= pair.first.upper) {
+    return true;
+  }
+  else {
+    return false;
+  }
+}
+
+bool partial_overlap(const section_ids_of_pair& pair) {
+  if (pair.second.lower <= pair.first.lower && pair.first.lower <= pair.second.upper) {
+    return true;
+  }
+  else if (pair.second.lower <= pair.first.upper && pair.first.upper <= pair.second.upper) {
+    return true;
+  }
+  else if (one_contains_the_other(pair)) {
     return true;
   }
   else {

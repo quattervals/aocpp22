@@ -27,12 +27,20 @@ TEST_CASE("Simple Day 4 Tester", "[day_4_from_input]") {
     };
     REQUIRE(true == one_contains_the_other(ids));
   }
-  
+
   SECTION("none  contains the other") {
     section_ids_of_pair ids{
       .first{ .lower{ 1 },  .upper{ 5 }},
       .second{.lower{ 29 }, .upper{ 50 }}
     };
     REQUIRE(false == one_contains_the_other(ids));
+  }
+
+  SECTION("none partial overlap") {
+    section_ids_of_pair ids{
+      .first{ .lower{ 1 },  .upper{ 5 }},
+      .second{.lower{ 29 }, .upper{ 50 }}
+    };
+    REQUIRE(false == partial_overlap(ids));
   }
 }
