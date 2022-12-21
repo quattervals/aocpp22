@@ -19,6 +19,14 @@ void crane(uint32_t quantity, uint32_t from, uint32_t to, std::vector<std::vecto
   }
 }
 
+void crane_9001(uint32_t quantity, uint32_t from, uint32_t to, std::vector<std::vector<char>>& dock) {
+  from -= 1;
+  to -= 1;
+
+  std::move(dock[from].end() - quantity, dock[from].end(), back_inserter(dock[to]));
+  dock[from].erase(dock[from].end() - quantity, dock[from].end());
+}
+
 void day_5_executor(const std::string& filename) {
   std::vector<std::vector<char>> real_dock{
     {'R', 'P', 'C', 'D', 'B', 'G' },
@@ -39,7 +47,7 @@ void day_5_executor(const std::string& filename) {
   if (file.is_open()) {
     for (std::string line; std::getline(file, line);) {
       auto cmd = collect_numbers_to_vec(line, ' ');
-      crane(std::stoi(cmd[0]), std::stoi(cmd[1]), std::stoi(cmd[2]), real_dock);
+      crane_9001(std::stoi(cmd[0]), std::stoi(cmd[1]), std::stoi(cmd[2]), real_dock);
     }
   }
   else {
