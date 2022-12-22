@@ -75,8 +75,12 @@
 			"variant": "cpp",
 			"iomanip": "cpp",
 			"cinttypes": "cpp",
-			"stack": "cpp"
+			"stack": "cpp",
+			"regex": "cpp",
+			"future": "cpp"
 		},
-		"C_Cpp.formatting": "clangFormat"
+		"C_Cpp.formatting": "clangFormat",
+		"editor.formatOnSave": true,
+		"clang-format.fallbackStyle": "Google"
 	}
 }
