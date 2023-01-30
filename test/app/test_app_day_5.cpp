@@ -9,7 +9,7 @@
 
 #include "day_5.hpp"
 
-TEST_CASE("Day 5 Tests", "[day_4_from_input]") {
+TEST_CASE("Day 5 Tests", "[day_4_from_input][.]") {
   SECTION("move Dock with crane 9000") {
     std::vector<std::vector<char>> testdock{
       {'Z', 'N' },

@@ -5,6 +5,7 @@ set(TEST_APP_NAME ${PROJECT_NAME}_app_test)
 add_executable(${TEST_APP_NAME}
   test_app_day_4.cpp
   test_app_day_5.cpp
+  test_app_day_10.cpp
 )
 
 target_include_directories(${TEST_APP_NAME} PUBLIC
