@@ -1,4 +1,5 @@
 {
     "C_Cpp.formatting": "clangFormat",
     "C_mantic.revealNewDefinition": true,
+    "editor.formatOnSave": true,
 }
