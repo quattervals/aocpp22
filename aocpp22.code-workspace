@@ -77,7 +77,10 @@
 			"cinttypes": "cpp",
 			"stack": "cpp",
 			"regex": "cpp",
-			"future": "cpp"
+			"future": "cpp",
+			"codecvt": "cpp",
+			"cfenv": "cpp",
+			"typeindex": "cpp"
 		},
 		"C_Cpp.formatting": "clangFormat",
 		"editor.formatOnSave": true,
