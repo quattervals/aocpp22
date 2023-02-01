@@ -23,10 +23,10 @@ inline constexpr auto operator"" _sh(const char* str, size_t len) {
   return hash_djb2a(std::string_view{ str, len });
 }
 
-int sum_of_six(std::vector<int>& reg, int start =19, int increment = 40, int num = 6) {
+int sum_of_six(std::vector<int>& reg, int start = 19, int increment = 40, int num = 6) {
   int sum{ 0 };
   for (int i = start; i < start + num * increment; i += increment) {
-    auto to_add = reg[i] * (i+1);
+    auto to_add = reg[i] * (i + 1);
     sum += to_add;
   }
   return sum;
@@ -42,6 +42,17 @@ int addx(std::vector<int>& reg, int op, int pass_on) {
 int noop(std::vector<int>& reg, int pass_on) {
   reg.emplace_back(pass_on);   // does it make a copy?}
   return pass_on;
+}
+
+bool drawSolid(int idx, int val) {
+  int idx_off_by_one = (idx +0) % 40;
+
+  if (idx_off_by_one <= val + 1 && idx_off_by_one >= val - 1) {
+    return true;
+  }
+  else {
+    return false;
+  }
 }
 
 void day_10_executor(const std::string& filename) {
@@ -81,7 +92,6 @@ void day_10_executor(const std::string& filename) {
 
   print_vector(alu_register);
 
-   int sum_part_1 = sum_of_six(alu_register);
-
-   std::cout << "Sum of six is " << sum_part_1 << std::endl;   //15000 too high
+  int sum_part_1 = sum_of_six(alu_register);
+  std::cout << "Sum of six is " << sum_part_1 << std::endl;   //15000 too high
 }

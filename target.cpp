@@ -10,7 +10,7 @@ int main() {
 
   //day_4_executor("inputs/day_4_hot.txt");
   // day_5_executor("inputs/day_5_hot.txt");
-  day_10_executor("inputs/10_hot.txt");
+  day_10_executor("inputs/10_ex_long.txt");
 
   return 0;
 }

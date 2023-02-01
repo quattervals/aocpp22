@@ -81,6 +81,7 @@
 		},
 		"C_Cpp.formatting": "clangFormat",
 		"editor.formatOnSave": true,
-		"clang-format.fallbackStyle": "Google"
+		"clang-format.fallbackStyle": "Google",
+		"C_mantic.headerGuard.style": "Add #pragma once"
 	}
 }
