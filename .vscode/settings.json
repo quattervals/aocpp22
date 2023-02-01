@@ -1,5 +1,5 @@
 {
     "C_Cpp.formatting": "clangFormat",
-    "C_mantic.revealNewDefinition": true,
     "editor.formatOnSave": true,
+    "C_mantic.headerGuard.style": "Add #pragma once",
 }

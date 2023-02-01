@@ -10,6 +10,21 @@ std::vector<std::string> collect_numbers_to_vec(const std::string& in, const cha
 
 template <typename T>
 void print_vector(std::vector<T> const& input) {
-  std::copy(input.begin(), input.end(), std::ostream_iterator<T>(std::cout, " "));
+  std::copy(input.begin(), input.end(), std::ostream_iterator<T>(std::cout, ", "));
   std::cout << std::endl;
+}
+
+/// @brief copy part of a vector
+/// @tparam T
+/// @param v original
+/// @param m from
+/// @param n to
+/// @return new vector
+template <typename T>
+std::vector<T> copy_slice(std::vector<T> const& v, int m, int n) {
+  auto first = v.cbegin() + m;
+  auto last = v.cbegin() + n + 1;
+
+  std::vector<T> vec(first, last);   // range constructor
+  return vec;
 }
