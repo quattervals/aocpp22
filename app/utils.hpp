@@ -4,6 +4,8 @@
 #include <stdbool.h>
 #include <algorithm>
 #include <iterator>
+#include <iostream>
+#include <unordered_map>
 
 std::vector<std::string> split_to_vec(const std::string& in, const char delim);
 std::vector<std::string> collect_numbers_to_vec(const std::string& in, const char delim);
@@ -27,4 +29,11 @@ std::vector<T> copy_slice(std::vector<T> const& v, int m, int n) {
 
   std::vector<T> vec(first, last);   // range constructor
   return vec;
+}
+
+template <typename Key, typename Item>
+void print_map(std::unordered_map<Key, Item> const& m) {
+  for (auto const& keyValPair : m) {
+    std::cout << "{" << keyValPair.first << keyValPair.second << "}\n";
+  }
 }
