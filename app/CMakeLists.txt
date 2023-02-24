@@ -5,6 +5,7 @@ target_sources(
   day_4.cpp
   day_5.cpp
   day_10.cpp
+  day_12.cpp
   utils.cpp
 )
 

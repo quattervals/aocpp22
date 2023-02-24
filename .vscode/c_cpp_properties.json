@@ -1,15 +1,17 @@
 {
     "configurations": [
         {
-            "name": "Linux",
+            "compileCommands": "${workspaceFolder}/build/compile_commands.json",
+            "compilerPath": "/usr/bin/gcc",
+            "configurationProvider": "ms-vscode.cmake-tools",
+            "cppStandard": "c++20",
+            "defines": [],
             "includePath": [
                 "${default}",
                 "${workspaceFolder}/**"
             ],
-            "defines": [],
-            "compilerPath": "/usr/bin/gcc",
-            "intelliSenseMode": "${default}",
-            "configurationProvider": "ms-vscode.cmake-tools"
+            "intelliSenseMode": "linux-gcc-x86",
+            "name": "Linux"
         }
     ],
     "version": 4

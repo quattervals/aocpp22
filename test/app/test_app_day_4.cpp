@@ -5,7 +5,7 @@
 
 section_ids_of_pair from_input(const std::string& line);
 
-TEST_CASE("Simple Day 4 Tester", "[day_4_from_input]") {
+TEST_CASE("Simple Day 4 Tester", "[day_4][.]") {
   SECTION("input with empty string") {
     std::string input{};
     section_ids_of_pair empty_ids{};

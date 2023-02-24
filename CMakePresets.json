@@ -8,8 +8,7 @@
       "binaryDir": "${sourceDir}/build",
       "generator": "Unix Makefiles",
       "cacheVariables": {
-        "CMAKE_C_COMPILER": "/bin/gcc",
-        "CMAKE_CXX_COMPILER": "/bin/g++"
+        "CMAKE_CXX_COMPILER": "/usr/bin/g++"
       }
     }
   ]

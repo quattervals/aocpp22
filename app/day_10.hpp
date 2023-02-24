@@ -2,6 +2,7 @@
 
 #include <stdint.h>
 #include <stdbool.h>
+#include <string>
 #include <vector>
 
 int noop(std::vector<int>& reg, int pass_on);
