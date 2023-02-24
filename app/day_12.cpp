@@ -1,4 +1,4 @@
-#include <cstddef>
+#include <cstdint>
 #include <stdint.h>
 #include <stdbool.h>
 #include <iostream>
@@ -7,8 +7,8 @@
 #include <string>
 #include <vector>
 #include <algorithm>
-#include <string_view>
 #include <unordered_map>
+#include <ranges>
 
 #include "day_12.hpp"
 
@@ -77,6 +77,13 @@ int dijkstra(std::unordered_map<Coordinates, Node>& nodes, const Coordinates& st
   return nodes.at(end_node).cost_from_starting_node;
 }
 
+void reset_search(std::unordered_map<Coordinates, Node>& nodes) {
+  for (auto& node : nodes) {
+    node.second.cost_from_starting_node = INIT_VAL;
+    node.second.visited = false;
+  }
+}
+
 void day_12_executor(const std::string& filename) {
   std::cout << "=== this is day 10 ===" << std::endl;
 
@@ -119,6 +126,20 @@ void day_12_executor(const std::string& filename) {
   std::cout << "Part One" << std::endl;
   find_neighbours(nodes);
   int path_length = dijkstra(nodes, start_node, end_node);
-
   std::cout << "Length to the top is " << path_length << std::endl;
+
+
+  std::cout << "Part Two - naive variant" << std::endl;
+  auto view_to_low_nodes = nodes | std::views::filter([](auto& v) {
+                             return v.second.height == 0;
+                           });
+
+  std::vector<int> shortest_paths{};
+  for (auto& ln : view_to_low_nodes) {
+    reset_search(nodes);
+    shortest_paths.push_back(dijkstra(nodes, ln.first, end_node));
+  }
+
+  std::cout << "The shortest path from a low point is "
+            << *std::min_element(shortest_paths.begin(), shortest_paths.end()) << std::endl;
 }

@@ -8,6 +8,7 @@
 #include <deque>
 #include <array>
 #include <algorithm>
+#include <ranges>
 
 #include "day_12.hpp"
 #include "utils.hpp"
@@ -16,6 +17,17 @@ namespace {
 bool hasNeighbour(std::vector<Coordinates>& neighbours, Coordinates neighbour) {
   return std::find(neighbours.begin(), neighbours.end(), neighbour) != neighbours.end();
 }
+
+std::vector<Coordinates> coordinates_of_low_nodes(std::unordered_map<Coordinates, Node>& nodes) {
+  std::vector<Coordinates> low_nodes{};
+  for (auto& node : nodes) {
+    if (node.second.height == 0) {
+      low_nodes.push_back(node.first);
+    }
+  }
+  return low_nodes;
+}
+
 }
 
 TEST_CASE("Day 12 Helpers") {
@@ -24,17 +36,17 @@ TEST_CASE("Day 12 Helpers") {
     nodes.insert({
       Coordinates{       5, 4 },
       Node({{ 4, 4 } },
-      INT_MAX, false)
+      INIT_VAL, false)
     });
     nodes.insert({
       Coordinates{       3, 3 },
       Node({{ 3, 4 } },
-      INT_MAX, false)
+      INIT_VAL, false)
     });
     nodes.insert({
       Coordinates{       3, 4 },
       Node({{ 4, 4 } },
-      INT_MAX, false)
+      INIT_VAL, false)
     });
 
     nodes.at({ 5, 4 }).cost_from_starting_node = 7;
@@ -54,38 +66,38 @@ TEST_CASE("Day 12 Helpers") {
     nodes.insert({
       Coordinates{start_node},
       Node({ { 4, 2 },  { 3, 3 } },
-      INT_MAX, false)
+      INIT_VAL, false)
     });
-    nodes.insert({ Coordinates{ end_node }, Node({}, INT_MAX, false) });
+    nodes.insert({ Coordinates{ end_node }, Node({}, INIT_VAL, false) });
     nodes.insert({
       Coordinates{       4, 2 },
       Node({{ 5, 2 } },
-      INT_MAX, false)
+      INIT_VAL, false)
     });
     nodes.insert({
       Coordinates{       5, 2 },
       Node({{ 5, 3 } },
-      INT_MAX, false)
+      INIT_VAL, false)
     });
     nodes.insert({
       Coordinates{       5, 3 },
       Node({{ 5, 4 } },
-      INT_MAX, false)
+      INIT_VAL, false)
     });
     nodes.insert({
       Coordinates{       5, 4 },
       Node({{ 4, 4 } },
-      INT_MAX, false)
+      INIT_VAL, false)
     });
     nodes.insert({
       Coordinates{       3, 3 },
       Node({{ 3, 4 } },
-      INT_MAX, false)
+      INIT_VAL, false)
     });
     nodes.insert({
       Coordinates{       3, 4 },
       Node({{ 4, 4 } },
-      INT_MAX, false)
+      INIT_VAL, false)
     });
 
     REQUIRE(3 == dijkstra(nodes, start_node, end_node));
@@ -159,7 +171,7 @@ TEST_CASE("Day 12 Example") {
   }
 
   SECTION("Constructor") {
-    REQUIRE(INT_MAX == nodes.at({ 7, 4 }).cost_from_starting_node);
+    REQUIRE(INIT_VAL == nodes.at({ 7, 4 }).cost_from_starting_node);
   }
 
   SECTION("fill nodes") {
@@ -184,5 +196,42 @@ TEST_CASE("Day 12 Example") {
     find_neighbours(nodes);
     int path_length = dijkstra(nodes, start_node, end_node);
     REQUIRE(31 == path_length);
+  }
+
+  SECTION("Find all lowest ('a') nodes") {
+    auto view_to_low_nodes = nodes | std::views::filter([](auto& v) {
+                               return v.second.height == 0;
+                             });
+
+    // copy nodes matching zero height to vector for convenience
+    // otherwise, we have to check the contents like this or find better helpers
+    REQUIRE(std::find_if(view_to_low_nodes.begin(), view_to_low_nodes.end(), [](auto& s) {
+              return s.first == Coordinates{ 0, 0 };
+            }) != view_to_low_nodes.end());
+
+    std::vector<Coordinates> low_nodes = coordinates_of_low_nodes(nodes);
+
+    REQUIRE(std::find(low_nodes.begin(), low_nodes.end(), Coordinates{ 1, 0 }) != low_nodes.end());
+    REQUIRE(std::find(low_nodes.begin(), low_nodes.end(), Coordinates{ 0, 1 }) != low_nodes.end());
+    REQUIRE(std::find(low_nodes.begin(), low_nodes.end(), Coordinates{ 0, 2 }) != low_nodes.end());
+    REQUIRE(std::find(low_nodes.begin(), low_nodes.end(), Coordinates{ 0, 3 }) != low_nodes.end());
+    REQUIRE(std::find(low_nodes.begin(), low_nodes.end(), Coordinates{ 0, 4 }) != low_nodes.end());
+  }
+
+  SECTION("find path lengths for all lowest nodes") {
+    auto view_to_low_nodes = nodes | std::views::filter([](auto& v) {
+                               return v.second.height == 0;
+                             });
+
+    find_neighbours(nodes);
+
+    std::vector<int> shortest_paths{};
+    for (auto& low_node : view_to_low_nodes) {
+      shortest_paths.push_back(dijkstra(nodes, low_node.first, end_node));
+      reset_search(nodes);
+    }
+
+    REQUIRE(6 == shortest_paths.size());
+    REQUIRE(29 == *std::min_element(shortest_paths.begin(), shortest_paths.end()));
   }
 }

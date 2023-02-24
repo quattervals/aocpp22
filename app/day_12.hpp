@@ -8,6 +8,8 @@
 #include <iostream>
 #include <optional>
 
+constexpr int INIT_VAL = INT_MAX - 1;
+
 struct Coordinates {
   int x;
   int y;
@@ -31,7 +33,7 @@ struct std::hash<Coordinates> {
 struct Node {
   bool visited{};
   int height{};
-  int cost_from_starting_node{ INT_MAX };
+  int cost_from_starting_node{ INIT_VAL };
   std::vector<Coordinates> neighbours{};
 
   Node(const Node&) = default;
@@ -66,9 +68,7 @@ struct Node {
 
 int heigth_from(char letter);
 void find_neighbours(std::unordered_map<Coordinates, Node>& nodes);
-
 std::optional<Coordinates> node_with_lowest_distance(const std::unordered_map<Coordinates, Node>& nodes);
-
 int dijkstra(std::unordered_map<Coordinates, Node>& nodes, const Coordinates& start_node, const Coordinates& end_node);
-
+void reset_search(std::unordered_map<Coordinates, Node>& nodes);
 void day_12_executor(const std::string& filename);
