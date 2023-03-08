@@ -6,6 +6,8 @@
 #include <iterator>
 #include <iostream>
 #include <unordered_map>
+#include <mutex>
+#include <condition_variable>
 
 std::vector<std::string> split_to_vec(const std::string& in, const char delim);
 std::vector<std::string> collect_numbers_to_vec(const std::string& in, const char delim);
@@ -37,3 +39,39 @@ void print_map(std::unordered_map<Key, Item> const& m) {
     std::cout << "{" << keyValPair.first << keyValPair.second << "}\n";
   }
 }
+
+/**
+ * @brief Semaphor implementing lock() and unlock()
+ * Borrowed from https://raymii.org/s/tutorials/Cpp_std_async_with_a_concurrency_limit.html
+ */
+class Semaphoro
+{
+public:
+  explicit Semaphoro(size_t count) : count(count) {}
+
+  size_t getCount() const {
+    return count;
+  };
+
+  void lock() {   // call before critical section
+    std::unique_lock<std::mutex> lock(mutex);
+    condition_variable.wait(lock, [this] {
+      if (count != 0)   // written out for clarity, could just be return (count != 0);
+        return true;
+      else
+        return false;
+    });
+    --count;
+  }
+
+  void unlock() {   // call after critical section
+    std::unique_lock<std::mutex> lock(mutex);
+    ++count;
+    condition_variable.notify_one();
+  }
+
+private:
+  std::mutex mutex;
+  std::condition_variable condition_variable;
+  size_t count;
+};

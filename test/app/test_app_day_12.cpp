@@ -11,7 +11,7 @@
 #include <ranges>
 
 #include "day_12.hpp"
-#include "utils.hpp"
+
 
 namespace {
 bool hasNeighbour(std::vector<Coordinates>& neighbours, Coordinates neighbour) {
@@ -228,7 +228,6 @@ TEST_CASE("Day 12 Example") {
     std::vector<int> shortest_paths{};
     for (auto& low_node : view_to_low_nodes) {
       shortest_paths.push_back(dijkstra(nodes, low_node.first, end_node));
-      reset_search(nodes);
     }
 
     REQUIRE(6 == shortest_paths.size());

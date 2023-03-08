@@ -69,6 +69,5 @@ struct Node {
 int heigth_from(char letter);
 void find_neighbours(std::unordered_map<Coordinates, Node>& nodes);
 std::optional<Coordinates> node_with_lowest_distance(const std::unordered_map<Coordinates, Node>& nodes);
-int dijkstra(std::unordered_map<Coordinates, Node>& nodes, const Coordinates& start_node, const Coordinates& end_node);
-void reset_search(std::unordered_map<Coordinates, Node>& nodes);
+int dijkstra(std::unordered_map<Coordinates, Node> nodes, Coordinates start_node, Coordinates end_node);
 void day_12_executor(const std::string& filename);
