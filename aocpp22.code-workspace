@@ -85,6 +85,13 @@
 		"C_Cpp.formatting": "clangFormat",
 		"editor.formatOnSave": true,
 		"clang-format.fallbackStyle": "Google",
-		"C_mantic.headerGuard.style": "Add #pragma once"
+		"C_mantic.headerGuard.style": "Add #pragma once",
+		"clangd.arguments": [
+			"--query-driver=/usr/bin/gcc",
+			"--query-driver=/usr/bin/g++",
+			"--query-driver=/usr/bin/c++"
+		],
+		"clangd.checkUpdates": true,
+		"clangd.detectExtensionConflicts": true
 	}
 }

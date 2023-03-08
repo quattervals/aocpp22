@@ -1,4 +1,3 @@
-#include <cstdint>
 #include <stdint.h>
 #include <stdbool.h>
 #include <iostream>
@@ -9,9 +8,9 @@
 #include <algorithm>
 #include <unordered_map>
 #include <ranges>
+#include <future>
 
 #include "day_12.hpp"
-
 #include "utils.hpp"
 
 int heigth_from(char letter) {
@@ -36,8 +35,8 @@ void find_neighbours(std::unordered_map<Coordinates, Node>& nodes) {
 std::optional<Coordinates> node_with_lowest_distance(const std::unordered_map<Coordinates, Node>& nodes) {
   /*
   Can't work with std::min_element(begin, end, comp).
-   In case no suitable min_element ist found, begin is returned, which might be non-sense
-*/
+  In case no suitable min_element ist found, begin is returned, which might be non-sense
+  */
 
   auto best_fit = nodes.end();
   for (auto it = nodes.begin(); it != nodes.end(); ++it) {
@@ -58,7 +57,7 @@ std::optional<Coordinates> node_with_lowest_distance(const std::unordered_map<Co
   }
 }
 
-int dijkstra(std::unordered_map<Coordinates, Node>& nodes, const Coordinates& start_node, const Coordinates& end_node) {
+int dijkstra(std::unordered_map<Coordinates, Node> nodes, Coordinates start_node, Coordinates end_node) {
   nodes.at(start_node).cost_from_starting_node = 0;
 
   auto key_current_node = node_with_lowest_distance(nodes);
@@ -75,13 +74,6 @@ int dijkstra(std::unordered_map<Coordinates, Node>& nodes, const Coordinates& st
   };
 
   return nodes.at(end_node).cost_from_starting_node;
-}
-
-void reset_search(std::unordered_map<Coordinates, Node>& nodes) {
-  for (auto& node : nodes) {
-    node.second.cost_from_starting_node = INIT_VAL;
-    node.second.visited = false;
-  }
 }
 
 void day_12_executor(const std::string& filename) {
@@ -128,18 +120,46 @@ void day_12_executor(const std::string& filename) {
   int path_length = dijkstra(nodes, start_node, end_node);
   std::cout << "Length to the top is " << path_length << std::endl;
 
+  std::cout << "Part Two - naive but multithreaded variant" << std::endl;
 
-  std::cout << "Part Two - naive variant" << std::endl;
   auto view_to_low_nodes = nodes | std::views::filter([](auto& v) {
                              return v.second.height == 0;
                            });
 
-  std::vector<int> shortest_paths{};
+  Semaphoro max_concurrent_jobs(11);
+  std::vector<std::future<int>> tasks{};
+
+  // start threads
+  int idx{ 0 };
   for (auto& ln : view_to_low_nodes) {
-    reset_search(nodes);
-    shortest_paths.push_back(dijkstra(nodes, ln.first, end_node));
+    tasks.push_back(std::async(
+      std::launch::async,
+      [](std::unordered_map<Coordinates, Node> nodes,
+         Coordinates start_node,
+         Coordinates end_node,
+         Semaphoro& max_jobs) {
+        std::scoped_lock w(max_jobs);
+        return dijkstra(nodes, start_node, end_node);
+      },
+      nodes,
+      ln.first,
+      end_node,
+      std::ref(max_concurrent_jobs)));
+
+    std::cout << "start task number " << idx++ << std::endl;
   }
 
-  std::cout << "The shortest path from a low point is "
-            << *std::min_element(shortest_paths.begin(), shortest_paths.end()) << std::endl;
+  // wait for each thread
+  for (auto& f : tasks) {
+    f.wait();
+  }
+
+  // collect futures
+  std::vector<int> short_paths{};
+  for (auto& r : tasks) {
+    short_paths.push_back(r.get());
+  }
+
+  std::cout << "Async: The shortest path from a low point is "
+            << *std::min_element(short_paths.begin(), short_paths.end()) << std::endl;
 }
